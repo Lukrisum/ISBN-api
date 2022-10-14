@@ -2,6 +2,7 @@ package service
 
 import (
 	"ISBN/global"
+	"ISBN/models/dao"
 	"net/http"
 	"net/url"
 )
@@ -20,7 +21,6 @@ func GetBookInfoFromJike(ISBN string) {
 	Url, err := url.Parse(global.JikeApi + "/situ/book/isbn" + ISBN)
 	if err != nil {
 		errCode = global.ServerError
-		message = "url 解析错误，请检查传参"
 		return
 	}
 
@@ -31,7 +31,7 @@ func GetBookInfoFromJike(ISBN string) {
 	defer res.Body.Close()
 
 	if err != nil || res.StatusCode != http.StatusOK {
-
+		
 		return data, errCode, err
 	}
 
