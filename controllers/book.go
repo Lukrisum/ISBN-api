@@ -15,7 +15,7 @@ func GetBookInfo(ctx *gin.Context) {
 	apiKey, ok := ctx.GetQuery("apikey")
 
 	if !ok {
-		ErrorResponse(ctx, global.ClientError, "缺少 apiKey")
+		ErrorResponse(ctx, global.ClientError)
 	}
 
 	getBookInfo.ISBN = ISBN

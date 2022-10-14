@@ -1,14 +1,21 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
-	"ISBN/controllers"
+	// "github.com/gin-gonic/gin"
+	// "ISBN/controllers"
+	"ISBN/global"
+	"fmt"
 )
 
 func main() {
-	r := gin.Default()
+	// r := gin.Default()
 
-	r.GET("/api/isbn/:ISBN", controllers.GetBookInfo)
+	for _,apiKey := range global.ApiKeys{
+		fmt.Println(apiKey.ApiKey)
+	}
 
-	r.Run("localhost:23333")
+	// r.GET("/api/isbn/:ISBN", controllers.GetBookInfo)
+
+	// r.Run("localhost:23333")
+
 }

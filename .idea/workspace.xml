@@ -5,7 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1c8bab42-1176-4584-a861-89eade664903" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controllers/book.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/book.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/global/code.go" beforeDir="false" afterPath="$PROJECT_DIR$/global/code.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/dao/dao.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/dao/dao.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/external.go" beforeDir="false" afterPath="$PROJECT_DIR$/service/external.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,7 +41,12 @@
     "WebServerToolWindowFactoryState": "false",
     "go.import.settings.migrated": "true",
     "go.sdk.automatically.set": "true",
-    "last_opened_file_path": "C:/Users/Mr.wang/Desktop/ISBN-api"
+    "last_opened_file_path": "C:/Users/Mr.wang/Desktop/ISBN-api",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "settings.editor.selected.configurable": "preferences.editor"
   }
 }]]></component>
   <component name="RunManager">
