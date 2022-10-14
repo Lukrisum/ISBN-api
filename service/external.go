@@ -6,13 +6,12 @@ import (
 	"net/url"
 )
 
-func GetBookInfoFromJike(ISBN, apiKey string) {
+func GetBookInfoFromJike(ISBN string) {
 
 	var (
 		err     error
 		errCode uint
-		// data interface{}
-		message string
+		data    interface{}
 	)
 
 	params := url.Values{}
@@ -33,7 +32,7 @@ func GetBookInfoFromJike(ISBN, apiKey string) {
 
 	if err != nil || res.StatusCode != http.StatusOK {
 
-		return
+		return data, errCode, err
 	}
 
 	// body, _ := ioutil.ReadAll(res.Body)

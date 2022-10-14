@@ -27,7 +27,7 @@ func GetBookInfo(ctx *gin.Context) {
 		errCode 		uint
 	)
 
-	data, errCode, err = service.GetBookInfoFromJike(getBookInfo.ISBN, getBookInfo.ApiKey)
+	data, errCode, err = service.GetBookInfoFromJike(getBookInfo.ISBN)
 
 	if err != nil {
 		ErrorResponse(ctx,errCode,)
@@ -36,11 +36,3 @@ func GetBookInfo(ctx *gin.Context) {
 
 	SuccessResponse(ctx,data)
 }
-
-// var person Person
-// if err := c.ShouldBindJSON(&person); err != nil {
-// 	c.JSON(http.StatusBadRequest, gin.H{
-// 		"error": err.Error(),
-// 	})
-// 	return
-// }

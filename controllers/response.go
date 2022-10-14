@@ -15,23 +15,18 @@ var Message = map[uint]string{
 	global.ClientError: "请求数据错误",
 }
 
-func SuccessResponse(ctx *gin.Context, data interface{}, extraDescription string) {
-
-	message := "success"
-	if extraDescription != "" {
-		message = extraDescription
-	}
+func SuccessResponse(ctx *gin.Context, data interface{}) {
 
 	ctx.JSON(200, map[string]interface{}{
 		"code": 0,
-		"msg":  message,
+		"msg":  "success",
 		"data": data,
 	})
 
 	ctx.Abort()
 }
 
-func ErrorResponse(ctx *gin.Context, code uint, extraDescription string) {
+func ErrorResponse(ctx *gin.Context, code uint) {
 
 	httpStatus, isMessageExits := HttpStatus[code]
 	if !isMessageExits {
@@ -40,7 +35,7 @@ func ErrorResponse(ctx *gin.Context, code uint, extraDescription string) {
 
 	message, isMessageExits := Message[code]
 	if !isMessageExits {
-		message = "未描述的错误" + extraDescription
+		message = "未描述的错误"
 	}
 
 	ctx.JSON(httpStatus, map[string]interface{}{
