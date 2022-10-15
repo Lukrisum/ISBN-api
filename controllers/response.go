@@ -12,7 +12,7 @@ var HttpStatus = map[uint]int{
 
 var Message = map[uint]string{
 	global.ServerError: "服务端错误",
-	global.ClientError: "请求数据错误",
+	global.ClientError: "请求错误",
 }
 
 func SuccessResponse(ctx *gin.Context, data interface{}, code uint) {

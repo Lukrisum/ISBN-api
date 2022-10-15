@@ -12,59 +12,32 @@ import (
 	"time"
 )
 
-type BookInfo struct {
-	Id            string `json:"id"`
-	Name          string `json:"name"`
-	Subname       string `json:"subname"`
-	Author        string `json:"author"`
-	Translator    string `json:"translator"`
-	Publishing    string `json:"publishing"`
-	Published     string `json:"published"`
-	Designed      string `json:"designed"`
-	Code          string `json:"code"`
-	Douban        int64  `json:"douban"`
-	DoubanScore   int    `json:"doubanScore"`
-	Brand         string `json:"brand"`
-	Weight        string `json:"weight"`
-	Size          string `json:"size"`
-	Pages         string `json:"pages"`
-	PhotoUrl      string `json:"photoUrl"`
-	LocalPhotoUrl string `json:"localPhotoUrl"`
-	Price         string `json:"price"`
-	Froms         string `json:"froms"`
-	Num           int32  `json:"num"`
-	CreateTime    string `json:"createTime"`
-	Uptime        string `json:"uptime"`
-	AuthorIntro   string `json:"authorIntro"`
-	Description   string `json:"description"`
-}
-
-func GetBookInfoFromJiKe(ISBN string) (BookInfo, uint, error) {
+func GetBookInfoFromJiKe(ISBN string) (interface{}, int, error) {
 
 	params := url.Values{}
 
-	for i, apiKey := range global.ApiKeys {
+	for i := 0; i < len(global.ApiKeys); i++ {
 
-		if apiKey.LastTime == 0 {
-			apiKey.LastTime = time.Now().Unix()
-		} else if apiKey.LastTime > 0 {
-			if time.Now().Unix()-apiKey.LastTime <= 1 {
-				continue
+		if global.ApiKeys[i].LastTime > 0 && time.Now().Unix()-global.ApiKeys[i].LastTime <= 1 {
+			if i == 4 {
+				break
 			}
+			continue
 		}
 
-		params.Set("apikey", apiKey.ApiKey)
+		params.Set("apikey", global.ApiKeys[i].ApiKey)
 
-		Url, urlErr := url.Parse(global.JikeApi + "/situ/book/isbn" + ISBN)
+		Url, urlErr := url.Parse(global.JikeApi + "/situ/book/isbn/" + ISBN)
 
 		if urlErr != nil {
-			return BookInfo{}, global.ClientError, errors.New("url parse err")
+			return nil, http.StatusBadRequest, errors.New("url parse err")
 		}
 
 		Url.RawQuery = params.Encode()
 		urlPath := Url.String()
 
-		apiKey.LastTime = time.Now().Unix()
+		global.ApiKeys[i].LastTime = time.Now().Unix()
+
 		getRes, getErr := http.Get(urlPath)
 
 		defer func(Body io.ReadCloser) {
@@ -75,23 +48,20 @@ func GetBookInfoFromJiKe(ISBN string) (BookInfo, uint, error) {
 		}(getRes.Body)
 
 		if getErr != nil || getRes.StatusCode != http.StatusOK {
-			if i == 4 {
-				// todo: log
-				return BookInfo{}, global.ServerError, getErr
-			}
-			continue
+			// todo: log
+			return nil, getRes.StatusCode, getErr
 		}
 
 		body, _ := ioutil.ReadAll(getRes.Body)
 
-		jsonRes, ok := gjson.Get(string(body), "data").Value().(BookInfo)
+		jsonRes := gjson.Get(string(body), "data").Value()
 
-		if !ok {
-			return BookInfo{}, global.ServerError, errors.New("Jike api dead")
+		if jsonRes == nil {
+			return jsonRes, http.StatusNotFound, errors.New("ISBN not found")
 		}
 
-		return jsonRes, global.Success, nil
+		return jsonRes, http.StatusOK, nil
 	}
 
-	return BookInfo{}, global.Success, nil
+	return nil, http.StatusTooManyRequests, errors.New("please retry later")
 }

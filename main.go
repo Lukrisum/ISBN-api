@@ -2,7 +2,7 @@ package main
 
 import (
 	"ISBN/controllers"
-	"github.com/gonic-gin/gin"
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
