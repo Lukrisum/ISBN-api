@@ -15,10 +15,10 @@ var Message = map[uint]string{
 	global.ClientError: "请求数据错误",
 }
 
-func SuccessResponse(ctx *gin.Context, data interface{}) {
+func SuccessResponse(ctx *gin.Context, data interface{}, code uint) {
 
 	ctx.JSON(200, map[string]interface{}{
-		"code": 0,
+		"code": code,
 		"msg":  "success",
 		"data": data,
 	})
